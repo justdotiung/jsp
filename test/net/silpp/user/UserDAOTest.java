@@ -24,16 +24,13 @@ public class UserDAOTest {
 	}
 
 	@Test // db에 유저 추가 테스트
-	public void addUser() throws Exception {
+	public void crud() throws Exception {
 		User user = UserTest.TEST_USER;  //duplicate Exception 
 		userDao.removeUser(user.getUserId());
 		userDao.addUser(user);
+		
+		User dbUser = userDao.findByUserId("ie"); // <-  return User("ie","1234","jj","efd@adsf.co")
+		assertEquals(user ,dbUser); // true.
 	}
 
-	@Test // db 값과 일치하는지 테스트.
-	public void findByUserId() throws Exception {
-		User user = userDao.findByUserId("userId");
-		assertEquals(user, UserTest.TEST_USER); //expected / actual
-
-	}
 }
