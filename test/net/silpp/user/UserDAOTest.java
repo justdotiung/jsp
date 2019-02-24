@@ -1,7 +1,7 @@
 package net.silpp.user;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import static org.junit.Assert.*;
 
 import java.sql.Connection;
 
@@ -25,13 +25,15 @@ public class UserDAOTest {
 
 	@Test // db에 유저 추가 테스트
 	public void addUser() throws Exception {
-//		userDao.addUser(UserTest.TEST_USER);
+		User user = UserTest.TEST_USER;  //duplicate Exception 
+		userDao.removeUser(user.getUserId());
+		userDao.addUser(user);
 	}
 
 	@Test // db 값과 일치하는지 테스트.
 	public void findByUserId() throws Exception {
 		User user = userDao.findByUserId("userId");
-		assertEquals(UserTest.TEST_USER, user);
+		assertEquals(user, UserTest.TEST_USER); //expected / actual
 
 	}
 }
