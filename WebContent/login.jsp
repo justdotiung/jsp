@@ -17,8 +17,7 @@
 					<div class="page-header">
 						<h1>로그인</h1>
 		
-						<form class="form-horiaontal" action="login_action.jsp"
-							method="post">
+						<form class="form-horiaontal" action="/users/login" method="post">
 							<%
 							String errorMessage = (String)request.getAttribute("errorMessage");
 							if(errorMessage !=null){

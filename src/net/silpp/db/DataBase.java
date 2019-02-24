@@ -9,7 +9,7 @@ public class DataBase {
 	private static Map<String ,User> users = new HashMap<>();
 	
 	public static void addUser(User user) {
-		System.out.println(user +":user");
+		System.out.println(user); //toString 으로 user 객체 데이터 확인.
 		users.put(user.getUserId(), user);
 	}
 
