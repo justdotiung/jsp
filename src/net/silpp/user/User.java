@@ -2,7 +2,6 @@ package net.silpp.user;
 
 import java.sql.SQLException;
 
-import net.silpp.db.DataBase;
 
 /**
  * @author jang

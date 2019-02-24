@@ -25,6 +25,7 @@ public class UserDAO {
 	}
 
 	public void addUser(User user) throws SQLException {
+		
 		String query = "insert into userTbl values (?,?,?,?)";
 		PreparedStatement pstat = getConnection().prepareStatement(query);
 		pstat.setString(1, user.getUserId());
@@ -34,7 +35,7 @@ public class UserDAO {
 
 		pstat.executeUpdate();
 
-	}//
+	}
 
 	public User findByUserId(String userId) throws SQLException {
 		String query = "select * from usertbl where userId = ? ";
@@ -47,12 +48,21 @@ public class UserDAO {
 		}
 
 				
-				User user =new User(rs.getString("userId"), 
+				return  new User(rs.getString("userId"), 
 						rs.getString("password"),
 						rs.getString("name"), 
 						rs.getString("email"));
 
-				return user;
+			 
+	}
+
+	public void removeUser(String userId) throws SQLException {
+		String query = "delete from userTbl where userId = ?";
+		PreparedStatement stmt = getConnection().prepareStatement(query);
+		stmt.setString(1, userId);
+		
+		stmt.executeUpdate();
+	
 	}
 
 

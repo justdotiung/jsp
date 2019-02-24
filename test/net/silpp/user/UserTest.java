@@ -2,30 +2,35 @@ package net.silpp.user;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
+import org.junit.Before;
 import org.junit.Test;
 
-import net.silpp.db.DataBase;
+
 
 /**
- * @author jang
  * 단위테스트 검증 
  */
 public class UserTest {
 	public static User TEST_USER = new User("ie","1234","jj","efd@adsf.co"); //테스트 객체.
+	
+	private UserDAO user=new UserDAO();
+	@Before
+	public void setup() throws Exception {
+		user.removeUser(TEST_USER.getUserId());
+	}
 	@Test
 	public void matchPassword() {
-	//중복 제거	User user = new User("ie","1234","jj","efd@adsf.co");
 		assertTrue(TEST_USER.matchPassword("1234"));
 	}
 	@Test
 	public void misMatchPassword() {
-	//	User user = new User("ie","1234","jj","efd@adsf.co");
 		assertFalse(TEST_USER.matchPassword("12342"));
 	}
 	@Test
 	public void login() throws Exception {
-		DataBase.addUser(TEST_USER);
-	
+		user.addUser(TEST_USER);
 		assertTrue(User.login(TEST_USER.getUserId() , TEST_USER.getPassword()));
 	}
 	
@@ -36,8 +41,8 @@ public class UserTest {
 
 	@Test(expected=PasswordMismatchException.class) //비밀번호가 다를경우.
 	public void loginWhenPasswordMismatch() throws Exception {
-		
-		DataBase.addUser(TEST_USER);
+		UserDAO dao =new UserDAO();
+		dao.addUser(TEST_USER);
 		User.login( TEST_USER.getUserId(),"12342");
 	}
 	

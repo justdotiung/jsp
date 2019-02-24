@@ -25,12 +25,20 @@ public class UserDAOTest {
 
 	@Test // db에 유저 추가 테스트
 	public void crud() throws Exception {
-		User user = UserTest.TEST_USER;  //duplicate Exception 
+		User user = UserTest.TEST_USER;  
 		userDao.removeUser(user.getUserId());
 		userDao.addUser(user);
 		
-		User dbUser = userDao.findByUserId("ie"); // <-  return User("ie","1234","jj","efd@adsf.co")
-		assertEquals(user ,dbUser); // true.
+		User dbUser = userDao.findByUserId(user.getUserId()); 
+		assertEquals(user ,dbUser); 
 	}
+	
+	@Test
+	public void notExistUserId() throws Exception {
+		User user = UserTest.TEST_USER;   
+		userDao.removeUser(user.getUserId());
 
+		User dbUser = userDao.findByUserId(user.getUserId());
+		assertNull(dbUser);
+	}	
 }
