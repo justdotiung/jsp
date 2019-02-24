@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.silpp.db.DataBase;
-//¸®ÆÑ
+//¸®
 @WebServlet("/users/save")
 public class SaveUserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
