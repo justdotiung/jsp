@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/users/login")
+@WebServlet("/login")
 public class LoginSevlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -20,10 +20,10 @@ public class LoginSevlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
 		
-		// 비밀번호가 다를경우. 
+
 		try{
 			User.login(userId, password);
-			HttpSession session = request.getSession(); //request 인스턴스에서 세션 값 을출력하는 session객체 생성.
+			HttpSession session = request.getSession(); 
 			session.setAttribute("userId", userId);		
 			
 			response.sendRedirect("/slipp/ex1.jsp");
@@ -31,10 +31,6 @@ public class LoginSevlet extends HttpServlet {
 			forwardJSP(request, response, "아이디가 존재하지 않습니다. 다시 로그인 하세요");
 		}catch(PasswordMismatchException e2){
 			forwardJSP(request, response, "비밀번호가 틀렸습니다.");
-//			request.setAttribute("errorMessage", "비밀번호가 틀렸습니다.");
-//			RequestDispatcher dispatcher= request.getRequestDispatcher("/slipp/login.jsp");
-//			dispatcher.forward(request, response);  
-			//리팩토링.
 		}
 		
 		

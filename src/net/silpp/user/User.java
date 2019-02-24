@@ -4,7 +4,7 @@ import net.silpp.db.DataBase;
 
 /**
  * @author jang
- *  map 의 value 값에 저장할수있는 클래스를 만든다.
+ *  map 의 value 값에 저장할수있는 클래스를 만든다.//
  */
 public class User {
 	private String userId;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,17 +18,12 @@
 					<div class="page-header">
 						<h1>로그인</h1>
 		
-						<form class="form-horiaontal" action="/users/login" method="post">
-							<%
-							String errorMessage = (String)request.getAttribute("errorMessage");
-							if(errorMessage !=null){
-							%>
+						<form action="login" method="post">
+							<c:if test="${not empty errorMessage}">
 							<div class="control-group">
-								<label class="error"><%=errorMessage %></label>
+								<label class="error">${errorMessage}</label>
 							</div>
-							<%
-							}
-							%>	
+							</c:if>
 							<br>					
 							<div class="control-group">
 								<label class="control-label" for="userId">사용자 아이디 </label>
