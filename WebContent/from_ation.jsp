@@ -15,6 +15,6 @@
 	User user = new User(userId,password,name,email);
 	DataBase.addUser(user);
 	
-
 	response.sendRedirect("ex1.jsp");
+	
 %>	
