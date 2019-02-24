@@ -11,7 +11,7 @@ import net.silpp.db.DataBase;
  * 단위테스트 검증 
  */
 public class UserTest {
-	public static User TEST_USER = new User("ie","1234","jj","efd@adsf.co");
+	public static User TEST_USER = new User("ie","1234","jj","efd@adsf.co"); //테스트 객체.
 	@Test
 	public void matchPassword() {
 	//중복 제거	User user = new User("ie","1234","jj","efd@adsf.co");
@@ -40,4 +40,5 @@ public class UserTest {
 		DataBase.addUser(TEST_USER);
 		User.login( TEST_USER.getUserId(),"12342");
 	}
+	
 }

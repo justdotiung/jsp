@@ -1,6 +1,7 @@
 package net.silpp.user;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,14 @@ public class SaveUserServlet extends HttpServlet{
 		String email= request.getParameter("email");
 
 		User user = new User(userId,password,name,email);
-		DataBase.addUser(user);
+		UserDAO dao = new UserDAO();
+		
+		try {
+			dao.addUser(user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		response.sendRedirect("/slipp/ex1.jsp");
 	}
