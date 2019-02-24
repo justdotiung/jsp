@@ -24,7 +24,7 @@
 <%
 	}else{
 %>
-              <li><a href="/users/logout">로그아웃</a></li>
+              <li><a href="users/logout">로그아웃</a></li>
               <li><a href="">개인정보수정</a></li>              
 <%
 	}
