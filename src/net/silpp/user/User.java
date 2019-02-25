@@ -2,15 +2,21 @@ package net.silpp.user;
 
 import java.sql.SQLException;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * @author jang
  *  map 의 value 값에 저장할수있는 클래스를 만든다.//
  */
 public class User {
+	@Expose
 	private String userId;
+	@Expose(serialize = false)
 	private String password;
+	@Expose
 	private String name;
+	@Expose
 	private String email;
 	
 	public User(String userId, String password, String name, String email) {
