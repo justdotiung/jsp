@@ -40,7 +40,7 @@ public class User {
 	public boolean matchPassword(String newPassword) {
 		return this.password.equals(newPassword);
 	}
-
+	// 생성자로  필드변수 초기값 출력 가능
 	public static boolean login(String userId, String password) throws UserNotFoundException, PasswordMismatchException {
 		UserDAO dao = new UserDAO();
 		User user =null;

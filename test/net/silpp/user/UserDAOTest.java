@@ -26,17 +26,15 @@ public class UserDAOTest {
 	@Test // db에 유저 추가 테스트
 	public void crud() throws Exception {
 		User user = UserTest.TEST_USER;  
-		userDao.removeUser(user.getUserId());
 		userDao.addUser(user);
 		
 		User dbUser = userDao.findByUserId(user.getUserId()); 
 		assertEquals(user ,dbUser); 
 	}
 	
-	@Test
+	@Test// db에 유저 아이디 존재하지 않는경우 테스트.
 	public void notExistUserId() throws Exception {
 		User user = UserTest.TEST_USER;   
-		userDao.removeUser(user.getUserId());
 
 		User dbUser = userDao.findByUserId(user.getUserId());
 		assertNull(dbUser);

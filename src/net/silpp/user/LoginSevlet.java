@@ -12,19 +12,20 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/login")
 public class LoginSevlet extends HttpServlet {
+	public static final String SESSION_USER_ID = "userId"; //다른곳에서 사용할수도있으니 접근제어자 변경.
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		
-		
-		String userId = request.getParameter("userId");
+		String userId = request.getParameter(SESSION_USER_ID);
 		String password = request.getParameter("password");
 		
 
 		try{
 			User.login(userId, password);
 			HttpSession session = request.getSession(); 
-			session.setAttribute("userId", userId);		
+			session.setAttribute(SESSION_USER_ID, userId);		
 			
 			response.sendRedirect("/slipp/ex1.jsp");
 		}catch(UserNotFoundException e){

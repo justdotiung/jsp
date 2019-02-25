@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>login</title>
 <%@include file="/commons/_head.jspf"%>
 </head>
 <body>
