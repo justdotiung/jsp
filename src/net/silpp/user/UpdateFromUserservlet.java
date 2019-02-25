@@ -33,12 +33,12 @@ public class UpdateFromUserservlet extends HttpServlet{
 			return ;
 		}
 		String userId = (String)obj;
-		System.out.println("userId: "+userId); //디버깅
+		System.out.println("userId: "+userId);
 		UserDAO dao = new UserDAO();
 		try {
 			User user = dao.findByUserId(userId);
 			req.setAttribute("user", user);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/update_form.jsp");//절대경로 
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/form.jsp"); // form과 update_form의 중복 리팩토리중.
 			dispatcher.forward(req, resp);
 		} catch (SQLException e) {
 			e.printStackTrace();

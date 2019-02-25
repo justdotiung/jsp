@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
-//¸®
-@WebServlet("/save")
-public class SaveUserServlet extends HttpServlet{
+
+@WebServlet("/create")
+public class CreateUserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -34,7 +34,6 @@ public class SaveUserServlet extends HttpServlet{
 		try {
 			dao.addUser(user);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
