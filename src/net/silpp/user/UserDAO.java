@@ -25,56 +25,122 @@ public class UserDAO {
 	}
 
 	public void addUser(User user) throws SQLException {
-		
 		String query = "insert into userTbl values (?,?,?,?)";
-		PreparedStatement pstat = getConnection().prepareStatement(query);
-		pstat.setString(1, user.getUserId());
-		pstat.setString(2, user.getPassword());
-		pstat.setString(3, user.getName());
-		pstat.setString(4, user.getEmail());
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = getConnection().prepareStatement(query);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, user.getName());
+			pstmt.setString(4, user.getEmail());
 
-		pstat.executeUpdate();
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 
 	}
 
 	public User findByUserId(String userId) throws SQLException {
 		String query = "select * from usertbl where userId = ? ";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setString(1, userId);
-		ResultSet rs = pstmt.executeQuery();
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User user = null;
+		try {
+			connection = getConnection();
+			pstmt = getConnection().prepareStatement(query);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
 
-		if (!rs.next()) {
-			return null;
+			if (!rs.next()) {
+				return null;
+			}
+			user = new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
+					rs.getString("email"));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+
 		}
-
-				
-				return  new User(rs.getString("userId"), 
-						rs.getString("password"),
-						rs.getString("name"), 
-						rs.getString("email"));
-
-			 
+		return user;
 	}
 
 	public void removeUser(String userId) throws SQLException {
 		String query = "delete from userTbl where userId = ?";
-		PreparedStatement stmt = getConnection().prepareStatement(query);
-		stmt.setString(1, userId);
-		
-		stmt.executeUpdate();
-	
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = getConnection().prepareStatement(query);
+			pstmt.setString(1, userId);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
 	}
 
 	public void updateUser(User user) throws SQLException {
 		String query = "update userTbl set password =? ,name =? ,email =? where userId = ?";
-		PreparedStatement pstat = getConnection().prepareStatement(query);
-		pstat.setString(1, user.getPassword());
-		pstat.setString(2, user.getName());
-		pstat.setString(3, user.getEmail());
-		pstat.setString(4, user.getUserId());
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			connection = getConnection();
+			pstmt = getConnection().prepareStatement(query);
+			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getName());
+			pstmt.setString(3, user.getEmail());
+			pstmt.setString(4, user.getUserId());
 
-		pstat.executeUpdate();
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+
+				if (pstmt != null)
+					pstmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
-
 
 }
