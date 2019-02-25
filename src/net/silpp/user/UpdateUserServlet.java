@@ -15,15 +15,13 @@ public class UpdateUserServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		HttpSession session =req.getSession();
-		//login 유무 담당.
-		Object obj = session.getAttribute(LoginSevlet.SESSION_USER_ID);
-		if(obj==null) {
+		HttpSession session = req.getSession();
+		String sessionUserId = SessionUtils.getStringValue(session,LoginSevlet.SESSION_USER_ID);
+		if(sessionUserId == null) {
 			resp.sendRedirect("/slipp/ex1.jsp");
 			return ;
 		}
-		//세션의 id값과 현재id값이 일치하는 여부.
-		String sessionUserId = (String)obj;
+		
 		String userId = req.getParameter("userId");
 		if(!sessionUserId.equals(userId)) {
 			

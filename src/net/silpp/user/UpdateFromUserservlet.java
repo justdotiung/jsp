@@ -25,14 +25,15 @@ public class UpdateFromUserservlet extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session =req.getSession();
-		
-		Object obj = session.getAttribute(LoginSevlet.SESSION_USER_ID);
-		if(obj==null) {
+		HttpSession session = req.getSession();
+		//중복제거
+		String userId = SessionUtils.getStringValue(session, LoginSevlet.SESSION_USER_ID);
+
+		if(userId ==null) {
 			resp.sendRedirect("/slipp/ex1.jsp");
 			return ;
 		}
-		String userId = (String)obj;
+		
 		System.out.println("userId: "+userId);
 		UserDAO dao = new UserDAO();
 		try {
