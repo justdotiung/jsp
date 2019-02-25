@@ -15,7 +15,7 @@ import javax.xml.ws.Response;
 import org.apache.catalina.connector.Request;
 
 
-@WebServlet("/user/updateform")
+@WebServlet("/updateform")
 public class UpdateFromUserservlet extends HttpServlet{
 
 	@Override

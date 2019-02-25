@@ -9,17 +9,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="/">지속가능한 삶, 프로그래밍, 프로그래머</a>
+          <a class="brand" href="/slipp/ex1.jsp">지속가능한 삶, 프로그래밍, 프로그래머</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="/slipp/ex1.jsp">Home</a></li><!-- 절대경로 -->
 			<c:choose>
 			<c:when test="${not empty userId}">
               <li><a href="logout">로그아웃</a></li>
-              <li><a href="user/updateform">개인정보수정</a></li>              
+              <li><a href="updateform">개인정보수정</a></li>              
 			</c:when>
 			<c:otherwise>
-              <li><a href="login.jsp">로그인</a></li> <!-- 상대경로 -->
+              <li><a href="/slipp/login.jsp">로그인</a></li> <!-- 상대경로 -->
               <li><a href="form.jsp">회원가입</a></li>              
 			</c:otherwise>
 			</c:choose>

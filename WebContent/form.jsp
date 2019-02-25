@@ -20,7 +20,7 @@
 				</div>
 			
 				
-				<form class="form-horizontal" action="user/save" method="post">
+				<form class="form-horizontal" action="save" method="post">
 					<div class="control-group">
 						<label class="control-label" for="userId">사용자 아이디</label>
 						<div class="controls">

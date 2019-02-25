@@ -20,7 +20,8 @@ public class LoginSevlet extends HttpServlet {
 		
 		String userId = request.getParameter(SESSION_USER_ID);
 		String password = request.getParameter("password");
-		
+		System.out.println(request.getRequestURI());
+		System.out.println(request.getContextPath());
 
 		try{
 			User.login(userId, password);

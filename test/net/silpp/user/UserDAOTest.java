@@ -30,13 +30,19 @@ public class UserDAOTest {
 		
 		User dbUser = userDao.findByUserId(user.getUserId()); 
 		assertEquals(user ,dbUser); 
+		//db 유저 수정 테스트
+		User updateUser = new User(user.getUserId(), "uPassword" , "ujj","u@adsf.co");
+		userDao.updateUser(updateUser);
+		dbUser = userDao.findByUserId(updateUser.getUserId());
+		assertEquals(updateUser, dbUser);
 	}
 	
 	@Test// db에 유저 아이디 존재하지 않는경우 테스트.
 	public void notExistUserId() throws Exception {
 		User user = UserTest.TEST_USER;   
-
+		userDao.removeUser(user.getUserId());
 		User dbUser = userDao.findByUserId(user.getUserId());
 		assertNull(dbUser);
 	}	
+	
 }
