@@ -1,6 +1,7 @@
 package net.silpp.user;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Set;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 import net.slipp.support.MyValidatorFactory;
 
@@ -28,13 +31,14 @@ public class CreateUserServlet extends HttpServlet{
 		
 		
 		request.setCharacterEncoding("UTF-8");
-		
-		String userId= request.getParameter("userId");
-		String password= request.getParameter("password");
-		String name= request.getParameter("name");
-		String email= request.getParameter("email");
+		User user = new User();
+		try {
+			BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
+			System.out.println(user.getName());
+		} catch (IllegalAccessException | InvocationTargetException e1) {
+			e1.printStackTrace();
+		}
 
-		User user = new User(userId,password,name,email);
 		Validator validator = MyValidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 		if(constraintViolations.size() >0) {

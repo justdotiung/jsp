@@ -32,5 +32,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/app/jang/product/11.2.0/dbhome_1/jdbc/lib/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jang/Downloads/commons-beanutils-1.9.3-bin/commons-beanutils-1.9.3/commons-beanutils-1.9.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jang/Downloads/commons-beanutils-1.9.3-bin/commons-beanutils-1.9.3/commons-beanutils-1.9.3-sources.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
