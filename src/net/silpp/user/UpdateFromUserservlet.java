@@ -19,11 +19,6 @@ import org.apache.catalina.connector.Request;
 public class UpdateFromUserservlet extends HttpServlet{
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-	
-	}
-	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		//중복제거
@@ -38,6 +33,7 @@ public class UpdateFromUserservlet extends HttpServlet{
 		UserDAO dao = new UserDAO();
 		try {
 			User user = dao.findByUserId(userId);
+			req.setAttribute("isUpdate", true);
 			req.setAttribute("user", user);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/form.jsp"); // form과 update_form의 중복 리팩토리중.
 			dispatcher.forward(req, resp);
