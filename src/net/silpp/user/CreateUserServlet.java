@@ -22,8 +22,9 @@ public class CreateUserServlet extends HttpServlet{
 		
 		
 		request.setCharacterEncoding("UTF-8");
-
+		// 기준 세우기. 4~12 이하,영문자/숫자만 허용
 		String userId= request.getParameter("userId");
+		// 2~10 이하
 		String password= request.getParameter("password");
 		String name= request.getParameter("name");
 		String email= request.getParameter("email");
