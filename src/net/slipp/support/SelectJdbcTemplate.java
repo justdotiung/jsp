@@ -1,27 +1,29 @@
 package net.slipp.support;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import net.silpp.user.User;
-import net.silpp.user.UserDAO;
-
-public abstract class JdbcTemplate {
-	public void exequteUpdate(String query) throws SQLException {
+//템플릿 메서드 패턴(구현하기 어려운 메서드를 추상 클래스로 만드는 디자인 패턴 ) 활용
+public abstract class SelectJdbcTemplate {
+	public Object executeQuery(String query) throws SQLException {
+		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
 		try {
 			connection = ConnectionManager.getConnection();
 			pstmt = connection.prepareStatement(query);
 			setParameters(pstmt);
+			rs = pstmt.executeQuery();
 
-			pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+			return mapRow(rs);
+
 		} finally {
 			try {
+				if (rs != null)
+					rs.close();
 				if (pstmt != null)
 					pstmt.close();
 				if (connection != null)
@@ -31,5 +33,6 @@ public abstract class JdbcTemplate {
 			}
 		}
 	}
+	public abstract Object mapRow(ResultSet rs) throws SQLException; 
 	public abstract void setParameters(PreparedStatement pstmt) throws SQLException ;
 }

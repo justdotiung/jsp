@@ -17,12 +17,6 @@ public class UserDAOTest {
 		userDao = new UserDAO();
 	}
 
-	@Test // db연결 테스트
-	public void test() {
-		Connection con = userDao.getConnection();
-		assertNotNull(con);
-	}
-
 	@Test // db에 유저 추가 테스트
 	public void crud() throws Exception {
 		User user = UserTest.TEST_USER;  
