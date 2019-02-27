@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
@@ -20,18 +20,27 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.0.15.Final</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		
+		</dependency>
+
 	</dependencies>
 
 	<build>

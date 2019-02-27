@@ -15,6 +15,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.slipp.support.MyValidatorFactory;
 
@@ -25,6 +27,7 @@ import net.slipp.support.MyValidatorFactory;
 @WebServlet("/create")
 public class CreateUserServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,10 +37,11 @@ public class CreateUserServlet extends HttpServlet{
 		User user = new User();
 		try {
 			BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
-			System.out.println(user.getName());
 		} catch (IllegalAccessException | InvocationTargetException e1) {
 			e1.printStackTrace();
 		}
+
+		logger.debug("user : {}" ,user);
 
 		Validator validator = MyValidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);

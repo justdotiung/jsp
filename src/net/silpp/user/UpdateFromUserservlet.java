@@ -10,26 +10,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 
-import org.apache.catalina.connector.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 
 @WebServlet("/updateform")
 public class UpdateFromUserservlet extends HttpServlet{
 
+private static final Logger logger = LoggerFactory.getLogger(UpdateFromUserservlet.class);
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		//중복제거
-		String userId = SessionUtils.getStringValue(session, LoginSevlet.SESSION_USER_ID);
+
+		
+				String userId = SessionUtils.getStringValue(session, LoginSevlet.SESSION_USER_ID);
 
 		if(userId ==null) {
 			resp.sendRedirect("/slipp/ex1.jsp");
 			return ;
 		}
-		
-		System.out.println("userId: "+userId);
+		logger.debug("userId: {}", userId);
 		UserDAO dao = new UserDAO();
 		try {
 			User user = dao.findByUserId(userId);
