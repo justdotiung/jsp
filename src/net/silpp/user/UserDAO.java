@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import net.slipp.support.JdbcTemplate;
 import net.slipp.support.RowMapper;
 
-/**
- * UserDAO¿« SetprepareStatement ∏Æ∆—≈‰∏µ
- */
 public class UserDAO {
 
 	public void addUser(User user) throws SQLException {

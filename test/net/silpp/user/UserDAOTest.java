@@ -3,7 +3,6 @@ package net.silpp.user;
 
 import static org.junit.Assert.*;
 
-import java.sql.Connection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -38,5 +37,8 @@ public class UserDAOTest {
 		User dbUser = userDao.findByUserId(user.getUserId());
 		assertNull(dbUser);
 	}	
-	
+	@Test//사용자 목록 조회
+	public void findUsers() throws Exception {
+		list
+	}
 }
