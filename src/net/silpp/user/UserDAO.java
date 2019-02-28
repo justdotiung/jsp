@@ -5,12 +5,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import net.slipp.support.JdbcTemplate;
-import net.slipp.support.SelectJdbcTemplate;
+import net.slipp.support.PreparesetParameters;
 
 public class UserDAO {
 
+	/**
+	 * 이슈 - 템플릿 메서드 클래스들의 병합으로 인해 굳이 구현하지않아도 되는 추상메서드 구현. 해결책 1. Jdbc의 추상메서드패턴 클래스 의
+	 * 추상메서드를 각각의 interface로 분리.
+	 */
 	public void addUser(User user) throws SQLException {
+		PreparesetParameters pss = new PreparesetParameters() {
 
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, user.getUserId());
+				pstmt.setString(2, user.getPassword());
+				pstmt.setString(3, user.getName());
+				pstmt.setString(4, user.getEmail());
+
+			}
+		};
 		JdbcTemplate template = new JdbcTemplate() {
 			@Override
 			public void setParameters(PreparedStatement pstmt) throws SQLException {
@@ -20,20 +34,20 @@ public class UserDAO {
 				pstmt.setString(4, user.getEmail());
 			}
 
+			@Override
+			public Object mapRow(ResultSet rs) throws SQLException {
+
+				return null;
+			}
+
 		};
 
 		String query = "insert into userTbl values (?,?,?,?)";
-		template.exequteUpdate(query);
+		template.exequteUpdate(query,pss);
 	}
 
-	/**
-	 * 리팩토리중 userId 달라지는 부분을 메소드 추출은 한다 (resultSet ,query) 매핑 부분(resultSet에서 데이터얻어서
-	 * user객채로 만들어 반환하는 부분)을 메소드 추출 명확하게 개발자가 개발해야하는 부분과 라이브러리 부분을 나눈다. 
-	 * 하나의 클래스로 만든다.
-	 * 리팩토링 한다.
-	 */
 	public User findByUserId(String userId) throws SQLException {
-		SelectJdbcTemplate template = new SelectJdbcTemplate() {
+		JdbcTemplate template = new JdbcTemplate() {
 
 			@Override
 			public void setParameters(PreparedStatement pstmt) throws SQLException {
@@ -53,22 +67,46 @@ public class UserDAO {
 		};
 
 		String query = "select * from usertbl where userId = ? ";
-		return (User)template.executeQuery(query);
+		return (User) template.executeQuery(query);
 	}
 
 	public void removeUser(String userId) throws SQLException {
+	PreparesetParameters pss = new PreparesetParameters() {
+		
+		@Override
+		public void setParameters(PreparedStatement pstmt) throws SQLException {
+			pstmt.setString(1, userId);
+			
+		}
+	};
 		JdbcTemplate template = new JdbcTemplate() {
 
 			@Override
 			public void setParameters(PreparedStatement pstmt) throws SQLException {
 				pstmt.setString(1, userId);
 			}
+
+			@Override
+			public Object mapRow(ResultSet rs) throws SQLException {
+				return null;
+			}
 		};
 		String query = "delete from userTbl where userId = ?";
-		template.exequteUpdate(query);
+		template.exequteUpdate(query , pss);
 	}
 
 	public void updateUser(User user) throws SQLException {
+		PreparesetParameters pss = new PreparesetParameters() {
+			
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, user.getPassword());
+				pstmt.setString(2, user.getName());
+				pstmt.setString(3, user.getEmail());
+				pstmt.setString(4, user.getUserId());
+				
+			}
+		};
 		JdbcTemplate template = new JdbcTemplate() {
 
 			@Override
@@ -79,8 +117,13 @@ public class UserDAO {
 				pstmt.setString(4, user.getUserId());
 
 			}
+
+			@Override
+			public Object mapRow(ResultSet rs) throws SQLException {
+				return null;
+			}
 		};
 		String query = "update userTbl set password =? ,name =? ,email =? where userId = ?";
-		template.exequteUpdate(query);
+		template.exequteUpdate(query , pss );
 	}
 }
