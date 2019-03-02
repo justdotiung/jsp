@@ -9,9 +9,9 @@
     </encoder>
   </appender>
 
-<logger name="net.slipp" level="info"/>
+<logger name="net.slipp" level="DEBUG"/>
 
-  <root level="warn">
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
