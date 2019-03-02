@@ -20,19 +20,15 @@ import org.slf4j.LoggerFactory;
 
 import net.slipp.support.MyValidatorFactory;
 
-
-
-
-
 @WebServlet("/create")
-public class CreateUserServlet extends HttpServlet{
+public class CreateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 		User user = new User();
 		try {
@@ -41,33 +37,26 @@ public class CreateUserServlet extends HttpServlet{
 			e1.printStackTrace();
 		}
 
-		logger.debug("user : {}" ,user);
+		logger.debug("user : {}", user);
 
 		Validator validator = MyValidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
-		if(constraintViolations.size() >0) {
+		if (constraintViolations.size() > 0) {
 			request.setAttribute("user", user);
 			String errorMessage = constraintViolations.iterator().next().getMessage();
 			forwardJSP(request, response, errorMessage);
-			return ;
+			return;
 		}
 		UserDAO dao = new UserDAO();
-		
-		try {
-			dao.addUser(user);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		dao.addUser(user);
 		response.sendRedirect("/slipp/ex1.jsp");
 	}
-	private void forwardJSP(HttpServletRequest request, HttpServletResponse response , String errorMessage)
+
+	private void forwardJSP(HttpServletRequest request, HttpServletResponse response, String errorMessage)
 			throws ServletException, IOException {
 		request.setAttribute("errorMessage", errorMessage);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/form.jsp");
 		dispatcher.forward(request, response);
 	}
-
-	
 
 }

@@ -6,6 +6,8 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
+import net.slipp.support.jdbc.ConnectionManager;
+
 class ConnectionManagerTest {
 
 	@Test // db연결 테스트

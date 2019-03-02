@@ -8,15 +8,18 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
-/*
-@WebServlet(urlPatterns= {"/*"})
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@WebFilter(urlPatterns= {"/*"})
 public class CharacterEncodingFilter implements Filter{
- 
-	
+	private static final Logger logger = LoggerFactory.getLogger(CharacterEncodingFilter.class);
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-	System.out.println("charator encoding fiher init");	
+	logger.debug("charator encoding fiher init!");
 	}
 
 	@Override
@@ -26,12 +29,8 @@ public class CharacterEncodingFilter implements Filter{
 		chain.doFilter(request, response);
 	}
 
-	
-	
 	@Override
 	public void destroy() {
-		
 	}
 
 }
-*/

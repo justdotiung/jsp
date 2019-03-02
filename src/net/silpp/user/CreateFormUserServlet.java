@@ -13,7 +13,6 @@ public class CreateFormUserServlet extends HttpServlet{
 	
 @Override
 protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	// ∫Û µ•¿Ã≈Õ ∞¥√º √‚∑¬
 	req.setAttribute("user", new User()); 
 	RequestDispatcher dispatcher = req.getRequestDispatcher("/form.jsp");
 	dispatcher.forward(req, resp);

@@ -45,18 +45,14 @@ public class UpdateUserServlet extends HttpServlet {
 		Validator validator = MyValidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 		if (constraintViolations.size() > 0) {
-			req.setAttribute("isUpdate", true);//login check
+			req.setAttribute("isUpdate", true);
 			req.setAttribute("user", user);
 			String errorMessage = constraintViolations.iterator().next().getMessage();
 			forwardJSP(req, resp, errorMessage);
 			return;
 		}
 		UserDAO dao = new UserDAO();
-		try {
-			dao.updateUser(user);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		dao.updateUser(user);
 		resp.sendRedirect("/slipp/ex1.jsp");
 	}
 
