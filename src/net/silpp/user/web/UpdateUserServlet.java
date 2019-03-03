@@ -1,4 +1,4 @@
-package net.silpp.user;
+package net.silpp.user.web;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -11,45 +11,52 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import net.silpp.user.User;
+import net.silpp.user.UserDAO;
 import net.slipp.support.MyValidatorFactory;
+import net.slipp.support.SessionUtils;
 
-@WebServlet("/create")
-public class CreateUserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LoggerFactory.getLogger(CreateUserServlet.class);
-
+@WebServlet("/update") // (브라우저를 통하지 않고) 직접 호출시 서블릿 관여를 할수있는 문제점이있다.
+public class UpdateUserServlet extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		HttpSession session = req.getSession();
+		String sessionUserId = SessionUtils.getStringValue(session, LoginSevlet.SESSION_USER_ID);
+		if (sessionUserId == null) {
+			resp.sendRedirect("/slipp/ex1.jsp");
+			return;
+		}
 		User user = new User();
 		try {
-			BeanUtilsBean.getInstance().populate(user, request.getParameterMap());
+			BeanUtilsBean.getInstance().populate(user, req.getParameterMap());
 		} catch (IllegalAccessException | InvocationTargetException e1) {
 			e1.printStackTrace();
 		}
 
-		logger.debug("user : {}", user);
+		if (!user.isSameUserId(sessionUserId)) {
+			resp.sendRedirect("/slipp/ex1.jsp");
+			return;
+		}
 
 		Validator validator = MyValidatorFactory.createValidator();
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 		if (constraintViolations.size() > 0) {
-			request.setAttribute("user", user);
+			req.setAttribute("isUpdate", true);
+			req.setAttribute("user", user);
 			String errorMessage = constraintViolations.iterator().next().getMessage();
-			forwardJSP(request, response, errorMessage);
+			forwardJSP(req, resp, errorMessage);
 			return;
 		}
 		UserDAO dao = new UserDAO();
-		dao.addUser(user);
-		response.sendRedirect("/slipp/ex1.jsp");
+		dao.updateUser(user);
+		resp.sendRedirect("/slipp/ex1.jsp");
 	}
 
 	private void forwardJSP(HttpServletRequest request, HttpServletResponse response, String errorMessage)

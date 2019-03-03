@@ -1,4 +1,4 @@
-package net.silpp.user;
+package net.silpp.user.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,6 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.silpp.user.User;
+import net.silpp.user.UserDAO;
+import net.slipp.support.SessionUtils;
 
 @WebServlet("/updateform")
 public class UpdateFromUserservlet extends HttpServlet {

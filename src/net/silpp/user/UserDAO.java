@@ -16,14 +16,13 @@ public class UserDAO {
 	}
 
 	public User findByUserId(String userId)  {
-		RowMapper<User> rm = new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
-
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"),
-						rs.getString("email"));
-			}
-		};
+		RowMapper<User> rm = rs->
+		new User(rs.getString("userId"),
+				rs.getString("password"),
+				rs.getString("name"),
+				rs.getString("email"));
+			
+		
 		JdbcTemplate template = new JdbcTemplate();
 
 		String query = "select * from usertbl where userId = ? ";
@@ -43,19 +42,15 @@ public class UserDAO {
 	}
 
 	public List<User> findUsers()  {
-		RowMapper<User> rm = new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs) throws SQLException {
-				return  new User(
-						rs.getString("userId"),
-						rs.getString("password"),
-						rs.getString("name"),
-						rs.getString("email"));
-			}
-		};
+		//람다식 표현으로 리팩토링
+		RowMapper<User> rm = rs-> new User(
+								rs.getString("userId"),
+								rs.getString("password"),
+								rs.getString("name"),
+								rs.getString("email"));
+			
 		JdbcTemplate template = new JdbcTemplate();
 		String query = "select * from userTbl";
-
 		return template.list(query, rm);
 
 	}

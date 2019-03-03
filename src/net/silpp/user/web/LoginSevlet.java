@@ -1,4 +1,4 @@
-package net.silpp.user;
+package net.silpp.user.web;
 
 import java.io.IOException;
 
@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.silpp.user.PasswordMismatchException;
+import net.silpp.user.User;
+import net.silpp.user.UserNotFoundException;
 
 @WebServlet("/login")
 public class LoginSevlet extends HttpServlet {

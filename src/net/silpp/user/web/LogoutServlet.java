@@ -1,4 +1,4 @@
-package net.silpp.user;
+package net.silpp.user.web;
 
 import java.io.IOException;
 
